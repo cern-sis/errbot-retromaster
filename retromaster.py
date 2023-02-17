@@ -14,11 +14,11 @@ class Retromaster(BotPlugin):
                                api_key=os.environ['BOT_ZULIP_KEY'])
     stream = 'test'
 
-    def activate(self, bot_handler, stream):
+    def activate(self):
         super(Retromaster, self).activate()
 
         #  send message every two weeks
-        self.start_poller(1209600, self.send_message(bot_handler, stream))
+        self.start_poller(1209600, self.send_message)
 
     def deactivate(self):
         super(Retromaster, self).deactivate()
@@ -35,7 +35,7 @@ class Retromaster(BotPlugin):
     def generate_message(self, bot_handler, stream):
         return 'Our next retro master is @**{name}** 🎉. The expectations are super high!'.format(name=self.fetch_user_data(bot_handler, stream)['full_name'])
 
-    def send_message(self, bot_handler, stream):
+    def send_message(self, bot_handler = bot_handler, stream = stream):
         request = dict(
             type='stream',
             to=stream,
