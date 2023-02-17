@@ -1,0 +1,9 @@
+[Core]
+name = Retromaster
+module = retromaster
+
+[Documentation]
+description = Plugin to pick host of retrospective meeting
+
+[Python]
+version = 3
