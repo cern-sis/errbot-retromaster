@@ -10,13 +10,13 @@ class Retromaster(BotPlugin):
     '''
 
     def activate(self):
-        super(Retromaster, self).activate()
+        super().activate()
 
         #  send message every two weeks
         self.start_poller(1209600, self.send_message)
 
     def deactivate(self):
-        super(Retromaster, self).deactivate()
+        super().deactivate()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
@@ -48,5 +48,3 @@ class Retromaster(BotPlugin):
         self.log.info(response.status_code)
         return "OK"
 
-
-handler_class = Retromaster
