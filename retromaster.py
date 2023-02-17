@@ -9,11 +9,6 @@ class Retromaster(BotPlugin):
       This bot will allow users to randomly pick the host of our biweekly retrospective meetings. 
     '''
 
-    bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
-                               email="retro-bot@cern-rcs-sis.zulipchat.com",
-                               api_key=os.environ['BOT_ZULIP_KEY'])
-    stream = 'test'
-
     def activate(self):
         super(Retromaster, self).activate()
 
@@ -35,7 +30,12 @@ class Retromaster(BotPlugin):
     def generate_message(self, bot_handler, stream):
         return 'Our next retro master is @**{name}** 🎉. The expectations are super high!'.format(name=self.fetch_user_data(bot_handler, stream)['full_name'])
 
-    def send_message(self, bot_handler = bot_handler, stream = stream):
+    def send_message(self):
+        bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
+                                   email="retro-bot@cern-rcs-sis.zulipchat.com",
+                                   api_key=os.environ['BOT_ZULIP_KEY'])
+        stream = 'test'
+
         request = dict(
             type='stream',
             to=stream,
