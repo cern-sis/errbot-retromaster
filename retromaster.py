@@ -16,6 +16,9 @@ class Retromaster(BotPlugin):
         #  send message every two weeks
         self.start_poller(1209600, self.send_message())
 
+    def deactivate(self):
+        super(Retromaster, self).deactivate()
+
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
 
@@ -29,18 +32,19 @@ class Retromaster(BotPlugin):
         return 'Our next retro master is @**{name}** 🎉. The expectations are super high!'.format(name=retromaster['full_name'])
 
     def send_message(self, stream, message):
-        headers = dict()
         BOT_API_KEY = os.environ['BOT_RETROMASTER_KEY']
         params = {
             'api_key': BOT_API_KEY,
             'stream': stream,
             'topic': 'Retrospective'
         }
-        
+        headers = dict()
+
         response = requests.post("https://cern-rcs-sis.zulipchat.com/api/v1/retromaster",
                                  params=params,
                                  headers=headers,
                                  data=message)
+
         self.log.info(response.status_code)
         return "OK"
 
