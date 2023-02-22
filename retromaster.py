@@ -2,6 +2,7 @@ from errbot import BotPlugin
 import zulip
 import os
 import random
+import schedule
 
 
 class Retromaster(BotPlugin):
@@ -13,11 +14,8 @@ class Retromaster(BotPlugin):
         super().activate()
 
         #  send message every two weeks
-        self.start_poller(1209600, self.send_message)
+        schedule.every(2).weeks.at("09:00").do(self.send_message)
         self.send_message()
-
-    def deactivate(self):
-        super().deactivate()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
@@ -49,4 +47,3 @@ class Retromaster(BotPlugin):
 
         self.log.info(response.status_code)
         return "OK"
-
