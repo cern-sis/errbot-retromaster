@@ -14,6 +14,7 @@ class Retromaster(BotPlugin):
 
         #  send message every two weeks
         self.start_poller(1209600, self.send_message)
+        self.send_message()
 
     def deactivate(self):
         super().deactivate()
@@ -28,13 +29,14 @@ class Retromaster(BotPlugin):
         return bot_handler.get_user_by_id(self.pick_random_user(bot_handler, stream))['user']
 
     def generate_message(self, bot_handler, stream):
-        return 'Our next retro master is @**{name}** 🎉. The expectations are super high!'.format(name=self.fetch_user_data(bot_handler, stream)['full_name'])
+        name = self.fetch_user_data(bot_handler, stream)['full_name']
+        return f'Our next retro master is @**{name}** 🎉. The expectations are super high!'
 
     def send_message(self):
         bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
                                    email="retro-bot@cern-rcs-sis.zulipchat.com",
                                    api_key=os.environ['BOT_ZULIP_KEY'])
-        stream = 'test'
+        stream = 'tools & services'
 
         request = dict(
             type='stream',
