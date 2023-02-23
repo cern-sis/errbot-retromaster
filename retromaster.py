@@ -34,7 +34,7 @@ class Retromaster(BotPlugin):
     @botcmd
     def pick(self):
         bot_handler = self.zulip()
-        stream = 'test'
+        stream = 'tools & services'
 
         request = dict(
             type='stream',
