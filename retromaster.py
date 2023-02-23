@@ -1,8 +1,7 @@
-from errbot import BotPlugin
+from errbot import BotPlugin, botcmd
 import zulip
 import os
 import random
-import schedule
 
 
 class Retromaster(BotPlugin):
@@ -12,10 +11,6 @@ class Retromaster(BotPlugin):
 
     def activate(self):
         super().activate()
-
-        #  send message every two weeks
-        schedule.every(2).weeks.at("09:00").do(self.send_message)
-        self.send_message()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
@@ -30,6 +25,7 @@ class Retromaster(BotPlugin):
         name = self.fetch_user_data(bot_handler, stream)['full_name']
         return f'Our next retro master is @**{name}** 🎉. The expectations are super high!'
 
+    @botcmd(name='pick')
     def send_message(self):
         bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
                                    email="retro-bot@cern-rcs-sis.zulipchat.com",
