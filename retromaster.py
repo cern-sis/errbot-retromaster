@@ -1,5 +1,4 @@
 from errbot import BotPlugin, botcmd
-import zulip
 import os
 import random
 import schedule
@@ -9,6 +8,9 @@ class Retromaster(BotPlugin):
     '''
       This bot will allow users to randomly pick the host of our biweekly retrospective meetings. 
     '''
+
+    def zulip(self):
+        return self._bot.client
 
     def activate(self):
         super().activate()
@@ -32,9 +34,7 @@ class Retromaster(BotPlugin):
 
     @botcmd
     def pick(self):
-        bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
-                                   email="retro-bot@cern-rcs-sis.zulipchat.com",
-                                   api_key=os.environ['BOT_ZULIP_KEY'])
+        bot_handler = self.zulip()
         stream = 'test'
 
         request = dict(
