@@ -14,7 +14,7 @@ class Retromaster(BotPlugin):
         super().activate()
 
         #  send message every two weeks
-        schedule.every(2).weeks.at("09:00").do(self.pick)
+        schedule.every(2).weeks.do(self.pick)
         self.pick()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
