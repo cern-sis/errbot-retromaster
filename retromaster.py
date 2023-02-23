@@ -35,7 +35,7 @@ class Retromaster(BotPlugin):
         bot_handler = zulip.Client(site="https://cern-rcs-sis.zulipchat.com",
                                    email="retro-bot@cern-rcs-sis.zulipchat.com",
                                    api_key=os.environ['BOT_ZULIP_KEY'])
-        stream = 'tools & services'
+        stream = 'test'
 
         request = dict(
             type='stream',
