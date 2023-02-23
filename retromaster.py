@@ -1,5 +1,4 @@
 from errbot import BotPlugin, botcmd
-import os
 import random
 import schedule
 
@@ -44,7 +43,4 @@ class Retromaster(BotPlugin):
             content=self.generate_message(bot_handler, stream),
         )
 
-        response = bot_handler.send_message(request)
-
-        self.log.info(response.status_code)
-        return "OK"
+        bot_handler.send_message(request)
