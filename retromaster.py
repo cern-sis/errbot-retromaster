@@ -1,6 +1,5 @@
 from errbot import BotPlugin, botcmd
-from apscheduler.schedulers.sync import Scheduler
-from apscheduler.triggers.calendarinterval import CalendarIntervalTrigger
+from apscheduler.schedulers.background import BackgroundScheduler
 from time import sleep
 import random
 
@@ -16,15 +15,12 @@ class Retromaster(BotPlugin):
         super().activate()
 
         #  send message every two weeks
-        with Scheduler() as scheduler:
-            scheduler.add_schedule(self.pick_retromaster, CalendarIntervalTrigger(weeks=2, days=4, hour=9))
-            scheduler.start_in_background()
-            while True:
-                sleep(1)
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(self.pick_retromaster, 'interval', days=14, start_date='2023-03-09 10:30:00')
+        scheduler.start()
 
     def deactivate(self):
         super().deactivate()
-        self.scheduler.shutdown()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
