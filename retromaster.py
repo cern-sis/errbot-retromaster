@@ -19,7 +19,7 @@ class Retromaster(BotPlugin):
 
     def schedule_job(self):
         scheduler = BackgroundScheduler()
-        scheduler.add_job(self.pick_retromaster, 'interval', days=14, start_date='2023-03-09 10:30:00')
+        scheduler.add_job(self.pick_retromaster, 'interval', days=14, start_date='2023-03-09 11:00:00')
         scheduler.start()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
