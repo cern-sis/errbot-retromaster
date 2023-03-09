@@ -19,7 +19,7 @@ class Retromaster(BotPlugin):
 
     def schedule_job(self):
         scheduler = BackgroundScheduler()
-        scheduler.add_job(self.pick_retromaster, 'interval', seconds=14, start_date='2023-03-09 13:35:00')
+        scheduler.add_job(self.pick_retromaster, 'interval', seconds=14)
         scheduler.start()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
@@ -43,7 +43,7 @@ class Retromaster(BotPlugin):
         request = dict(
             type='stream',
             to=stream,
-            subject='retrospective',
+            subject='Retrospective',
             content=self.generate_message(bot_handler, stream),
         )
 
