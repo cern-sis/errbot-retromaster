@@ -17,14 +17,14 @@ class Retromaster(BotPlugin):
     def activate(self):
         super().activate()
         self.schedule_job()
+        self.scheduler().start()
 
     def deactivate(self):
         super().deactivate()
-        self.scheduler().shutdown()
+        self.schedule_job().remove()
 
     def schedule_job(self):
-        self.scheduler().add_job(self.pick_retromaster, 'interval', days=14)
-        self.scheduler().start()
+        return self.scheduler().add_job(self.pick_retromaster, 'interval', days=14)
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
