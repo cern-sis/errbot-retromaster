@@ -1,7 +1,8 @@
 from errbot import BotPlugin, botcmd
+from apscheduler.schedulers.sync import Scheduler
+from apscheduler.triggers.calendarinterval import CalendarIntervalTrigger
+from time import sleep
 import random
-import schedule
-
 
 class Retromaster(BotPlugin):
     '''
@@ -15,8 +16,15 @@ class Retromaster(BotPlugin):
         super().activate()
 
         #  send message every two weeks
-        schedule.every(2).weeks.do(self.pick)
-        self.pick()
+        with Scheduler() as scheduler:
+            scheduler.add_schedule(self.pick_retromaster, CalendarIntervalTrigger(weeks=2, days=4, hour=9))
+            scheduler.start_in_background()
+            while True:
+                sleep(1)
+
+    def deactivate(self):
+        super().deactivate()
+        self.scheduler.shutdown()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
@@ -32,9 +40,9 @@ class Retromaster(BotPlugin):
         return f'Our next retro master is @**{name}** 🎉. The expectations are super high!'
 
     @botcmd
-    def pick(self):
+    def pick_retromaster(self):
         bot_handler = self.zulip()
-        stream = 'tools & services'
+        stream = 'test'
 
         request = dict(
             type='stream',
