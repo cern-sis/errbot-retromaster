@@ -42,12 +42,12 @@ class Retromaster(BotPlugin):
     @botcmd
     def pick_retromaster(self):
         bot_handler = self.zulip()
-        stream = 'tools & services'
+        stream = 'test'
 
         request = dict(
             type='stream',
             to=stream,
-            subject='retrospective',
+            subject='Retrospective',
             content=self.generate_message(bot_handler, stream),
         )
 
