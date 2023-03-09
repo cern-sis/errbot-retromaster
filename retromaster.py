@@ -10,17 +10,21 @@ class Retromaster(BotPlugin):
     def zulip(self):
         return self._bot.client
 
+    def scheduler(self):
+        scheduler = BackgroundScheduler()
+        return scheduler
+
     def activate(self):
         super().activate()
         self.schedule_job()
 
     def deactivate(self):
         super().deactivate()
+        self.scheduler().shutdown()
 
     def schedule_job(self):
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(self.pick_retromaster, 'interval', days=14)
-        scheduler.start()
+        self.scheduler().add_job(self.pick_retromaster, 'interval', days=14)
+        self.scheduler().start()
 
     def get_all_subscribers_from_stream(self, bot_handler, stream):
         return bot_handler.get_subscribers(stream=stream)['subscribers']
