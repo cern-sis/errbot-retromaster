@@ -37,12 +37,12 @@ class Retromaster(BotPlugin):
 
     def generate_message(self, bot_handler, stream):
         name = self.fetch_user_data(bot_handler, stream)['full_name']
-        return f'Our next retro master is @**{name}** 🎉. The expectations are super high!'
+        return f'Our next retro master is **{name}** 🎉. The expectations are super high!'
 
     @botcmd
     def pick_retromaster(self):
         bot_handler = self.zulip()
-        stream = 'tools & services'
+        stream = 'test'
 
         request = dict(
             type='stream',
