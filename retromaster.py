@@ -4,7 +4,7 @@ from errbot import BotPlugin, botcmd
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
 
-TWO_WEEKS_IN_SECONDS = 60  # 1 Minute
+TWO_WEEKS_IN_SECONDS = 60 * 60 * 24 * 14  # 2 weeks
 
 
 class RetromasterPicker(BotPlugin):
@@ -22,8 +22,8 @@ class RetromasterPicker(BotPlugin):
         scheduler.start()
 
     def pick_retromaster(self):
-        stream_name = "test"  # Replace with the name of the stream
-        topic = "Retromaster"  # Replace with the topic
+        stream_name = "tools & services"  # Replace with the name of the stream
+        topic = "Retrospective"  # Replace with the topic
         users = [
             "Benjamin Bergia",
             "Ernesta Petraityte",
@@ -36,7 +36,7 @@ class RetromasterPicker(BotPlugin):
             "Parth Shandilya",
         ]
         retromaster = random.choice(users)
-        message = f"Our next retro master is **{retromaster}** 🎉. The expectations are super high!"
+        message = f"Our next retro master is @**{retromaster}** 🎉. The expectations are super high!"
         destination = self.build_identifier(f"#{{{{{stream_name}}}}}*{{{{{topic}}}}}")
         self.log.info(f"Sending message to: {destination}")
         try:
