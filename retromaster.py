@@ -1,8 +1,7 @@
 import random
 
 from errbot import BotPlugin, botcmd
-from threading import Timer
-
+from apscheduler.schedulers.background import BackgroundScheduler
 
 TWO_WEEKS_IN_SECONDS = 60  # 1 Minute
 
@@ -13,7 +12,9 @@ class RetromasterPicker(BotPlugin):
         self.start_periodic_task()
 
     def start_periodic_task(self):
-        Timer(TWO_WEEKS_IN_SECONDS, self.pick_retromaster).start()
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(self.pick_retromaster, 'interval', seconds=TWO_WEEKS_IN_SECONDS)
+        scheduler.start()
 
     def pick_retromaster(self):
         stream_name = "test"  # Replace with the name of the stream
@@ -31,7 +32,7 @@ class RetromasterPicker(BotPlugin):
         ]
         retromaster = random.choice(users)
         message = f"Our next retro master is **{retromaster}** 🎉. The expectations are super high!"
-        destination = self.build_identifier(f"{stream_name}@{topic}")
+        destination = self.build_identifier(f"#{{{{{stream_name}}}}}*{{{{{topic}}}}}")
         self.send(destination, message)
         self.start_periodic_task()
 
