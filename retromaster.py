@@ -40,7 +40,7 @@ class Retromaster(BotPlugin):
         return f'Our next retro master is **{name}** 🎉. The expectations are super high!'
 
     @botcmd
-    def pick_retromaster(self):
+    def pick_retromaster(self, msg, args):
         bot_handler = self.zulip()
         stream = 'test'
 
