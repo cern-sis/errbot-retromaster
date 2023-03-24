@@ -31,7 +31,7 @@ class RetromasterPicker(BotPlugin):
         ]
         retromaster = random.choice(users)
         message = f"Our next retro master is **{retromaster}** 🎉. The expectations are super high!"
-        destination = self.build_identifier(f"{stream_name}@{self._bot.bot_config.CHATROOM_FN}@{topic}")
+        destination = self.build_identifier(f"{stream_name}@{topic}")
         self.send(destination, message)
         self.start_periodic_task()
 
