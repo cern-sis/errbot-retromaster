@@ -34,6 +34,7 @@ class RetromasterPicker(BotPlugin):
             "Jimil Desai",
             "Pamfilos F",
             "Parth Shandilya",
+            "Pascal Egner"
         ]
         retromaster = random.choice(users)
         message = f"Our next retro master is @**{retromaster}** 🎉. The expectations are super high!"
