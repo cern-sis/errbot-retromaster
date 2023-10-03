@@ -1,11 +1,7 @@
 import random
 
 from errbot import BotPlugin, botcmd
-from apscheduler.schedulers.background import BackgroundScheduler
 import logging
-
-TWO_WEEKS_IN_SECONDS = 60 * 60 * 24 * 14  # 2 weeks
-
 
 class RetromasterPicker(BotPlugin):
     def __init__(self, *args, **kwargs):
@@ -14,16 +10,14 @@ class RetromasterPicker(BotPlugin):
 
     def activate(self):
         super().activate()
-        self.start_periodic_task()
 
-    def start_periodic_task(self):
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(self.pick_retromaster, 'interval', seconds=TWO_WEEKS_IN_SECONDS)
-        scheduler.start()
+    def deactivate(self):
+        super().deactivate()
+
 
     def pick_retromaster(self):
-        stream_name = "tools & services"  # Replace with the name of the stream
-        topic = "Retrospective"  # Replace with the topic
+        stream_name = "tools & services"
+        topic = "retrospective"
         users = [
             "Benjamin Bergia",
             "Ernesta Petraityte",
